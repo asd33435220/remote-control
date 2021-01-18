@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import './peer-puppet.js'
 var controller = 0
 
-const { ipcRenderer } = window.require('electron')
+const { ipcRenderer, remote } = window.require('electron')
+const { Menu, MenuItem } = remote
 
 function App() {
   const [remoteCode, setRemoteCode] = useState('')
@@ -38,12 +39,19 @@ function App() {
     ipcRenderer.send('control', remoteCode)
   }
 
+  const handleContextMenu = (e) => {
+    e.preventDefault()
+    const menu = new Menu()
+    menu.append(new MenuItem({ label: '复制?', role: 'copy' }))
+    menu.popup()
+  }
+
   return (
     <div className="App">
       {
         controlText === '' ?
           (<>
-            <div> 你的控制码为{localCode}</div>
+            <div > 你的控制码为<span onContextMenu={(e) => { handleContextMenu(e) }}>{localCode}</span></div>
             <input type="text" value={remoteCode} onChange={(e) => { setRemoteCode(e.target.value) }} />
             <button onClick={() => { startControl(remoteCode) }}>确认</button>
           </>) :

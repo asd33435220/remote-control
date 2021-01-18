@@ -40,8 +40,30 @@ async function getScreenStream() {
 }
 // getScreenStream()
 
+function getVideoStream() {
+    return new Promise((resolve, reject) => {
+        navigator.mediaDevices.getUserMedia({
+            audio: false,
+            video: {
+                width: { min: 1024, ideal: 1280, max: 1920 },
+                height: { min: 574, ideal: 720, max: 1080 },
+                frameRate: { max: 30 }
+            }
+        })
+            .then(stream => {
+                console.log(stream);
+                resolve(stream)
+            })
+            .catch(err => {
+                console.log(err);
+                console.log(err.name);
+            })
+    })
+}
+getVideoStream()
+
 async function createAnswer(offer) {
-    let screenStream = await getScreenStream()
+    let screenStream = await getVideoStream()
     pc.addStream(screenStream)
     await pc.setRemoteDescription(offer)
     await pc.setLocalDescription(await pc.createAnswer())

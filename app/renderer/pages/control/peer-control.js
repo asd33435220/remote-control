@@ -27,15 +27,13 @@ dc.onmessage = function (event) {
 }
 
 dc.onerror = (e) => {
-    console.log("error", e);
+    console.log(e);
 }
 
 pc.onicecandidate = function (e) {
     if (!e.candidate) {
         return
     }
-    console.log('e.candidate', JSON.stringify(e.candidate));
-
     ipcRenderer.send('forward', 'control-candidate', JSON.stringify(e.candidate))
 }
 ipcRenderer.on('disconnect', (e, candidate) => {
@@ -44,8 +42,6 @@ ipcRenderer.on('disconnect', (e, candidate) => {
 let candidates = []
 
 async function addIceCandidate(candidate) {
-    console.log('addIceCandidate here');
-
     if (candidate) {
         candidates.push(candidate)
     }

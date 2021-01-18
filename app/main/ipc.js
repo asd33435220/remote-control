@@ -39,15 +39,6 @@ function handleIpc() {
         sendControlWindow('answer', data)
     })
 
-
-    
-
-    // signal.on('puppet-candidate', data => {
-    //     console.log('puppet-condidate---------');
-        
-    //     sendControlWindow('candidate', data)
-    // })
-
     signal.on('control-candidate', data => {
         console.log('control-candidate');
         console.log("control-candidate-data",data);

@@ -1,5 +1,5 @@
 {
-  "name": "remote-table",
+  "name": "Mercurius",
   "version": "1.0.0",
   "description": "",
   "main": "app/main/index.js",
@@ -8,9 +8,11 @@
     "start": "electron .",
     "react": "cd app/renderer/src/main && npm start "
   },
-  "author": "",
+  "author": "zhuyuchen",
   "license": "ISC",
   "dependencies": {
+    "about-window": "^1.13.4",
+    "applescript": "^1.0.0",
     "electron": "^11.1.1",
     "electron-is-dev": "^1.2.0",
     "electron-rebuild": "^2.3.4",

@@ -3,12 +3,22 @@ const isDev = require('electron-is-dev')
 const path = require('path')
 
 let win
+let willQuitAPP = false
 function create() {
     win = new BrowserWindow({
         width: 600,
         height: 300,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
+        }
+    })
+    win.on('close', (e) => {
+        if (willQuitAPP) {
+            win = null
+        } else {
+            e.preventDefault()
+            win.hide()
         }
     })
     console.log(isDev);
@@ -24,4 +34,13 @@ function create() {
 function send(channel, ...args) {
     win.webContents.send(channel, ...args)
 }
-module.exports = { create, send }
+function show() {
+    console.log('show');
+    
+    win.show()
+}
+function close() {
+    willQuitAPP = true
+    win.close()
+}
+module.exports = { create, send, show, close }
